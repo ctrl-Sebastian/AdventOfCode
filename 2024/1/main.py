@@ -5,7 +5,6 @@ fileContent = inputFile.read()
 leftList = []
 rightList = []
 
-sum = 0
 
 for line in fileContent.strip().split('\n'):
     col1, col2 = map(int, line.split())
@@ -15,9 +14,30 @@ for line in fileContent.strip().split('\n'):
 leftList.sort()
 rightList.sort()
 
-for i in range(len(leftList)):
-    sum += abs(leftList[i] - rightList[i])
+
+def partOne():
+    sum = 0
+    for i in range(len(leftList)):
+        sum += abs(leftList[i] - rightList[i])
+    print("the total distances between the list is: ", sum)
 
 
-print("the total distances between the list is: ", sum)
+def partTwo():
+    score = 0
+    element_dict = {}
+    for n in rightList:
+        if n in element_dict:
+            element_dict[n] += 1
+        else:
+            element_dict[n] = 1
+
+    #TODO for every element in left list sum to the similarity score
+    for n in leftList:
+        if n in element_dict:
+            score += (n * element_dict[n])
+    
+    print("similarity score: ", score)
+
+partTwo()
+
 inputFile.close()
