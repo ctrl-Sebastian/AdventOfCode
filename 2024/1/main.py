@@ -31,7 +31,6 @@ def partTwo():
         else:
             element_dict[n] = 1
 
-    #TODO for every element in left list sum to the similarity score
     for n in leftList:
         if n in element_dict:
             score += (n * element_dict[n])
