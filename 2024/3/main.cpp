@@ -19,28 +19,25 @@ void analyze(string line)
         int start = line.find("mul(", index) + 4;
         int end = line.find(")", start);
         
-        // Ensure the closing parenthesis is within the next 8 characters
         if (end == string::npos || end - start > 8)
         {
             cerr << "Error: Closing parenthesis is too far from mul(" << endl;
-            index = start + 1; // Move forward to continue searching
+            index = start + 1; 
             continue;
         }
 
         string numbers = line.substr(start, end - start);
         size_t commaPos = numbers.find(",");
-        if (commaPos == string::npos) // Ensure ',' exists
+        if (commaPos == string::npos) 
         {
             cerr << "Error: Missing comma in mul(" << numbers << ")" << endl;
-            index = end + 1; // Move forward to continue searching
+            index = end + 1; 
             continue;
         }
 
-        // Extract potential numbers
         string firstNumStr = numbers.substr(0, commaPos);
         string secondNumStr = numbers.substr(commaPos + 1);
 
-        // Validate and parse numbers
         if (!isValidNumber(firstNumStr) || !isValidNumber(secondNumStr))
         {
             cerr << "Error: Invalid numbers in mul(" << numbers << ")" << endl;
@@ -51,13 +48,11 @@ void analyze(string line)
         int firstNumber = stoi(firstNumStr);
         int secondNumber = stoi(secondNumStr);
 
-        // Perform calculations
         cout << "firstNumber: " << firstNumber << " secondNumber: " << secondNumber << endl;
         cout << "product: " << firstNumber * secondNumber << endl;
         sum += firstNumber * secondNumber;
         cout << "sum: " << sum << endl;
 
-        // Move index forward to search for the next occurrence
         index = end + 1;
     }
 }
