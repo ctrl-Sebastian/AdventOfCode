@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool is_invalid(long id) {
+bool is_invalid(string id) {
         // TODO: check if ID is invalid
+        // build a sequence going char by char, if a char is different than the first char of the sequence, store that sequence, if the sequence is repeated another time and there are no char left in the string, the Id is invalid
         return true;
 }
 
@@ -16,7 +17,7 @@ long analyse_id_range(string id_range) {
 
         for (long i = id_1; i < id_2; i++)
         {
-                if(is_invalid(i)){
+                if(is_invalid(to_string(i))){
                         return i;
                 }
                 return 0;
