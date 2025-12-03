@@ -3,6 +3,7 @@
 using namespace std;
 
 int sum = 0;
+bool enabled = true;
 
 bool isValidNumber(const string &str)
 {
@@ -14,47 +15,52 @@ bool isValidNumber(const string &str)
 void analyze(string line)
 {
     int index = 0;
-    while ((line.find("mul(", index)) != string::npos)
-    {
-        int start = line.find("mul(", index) + 4;
-        int end = line.find(")", start);
+    if (enabled) {
         
-        if (end == string::npos || end - start > 8)
-        {
-            cerr << "Error: Closing parenthesis is too far from mul(" << endl;
-            index = start + 1; 
-            continue;
-        }
+        while ((line.find("mul(", index)) != string::npos){
+            int start = line.find("mul(", index) + 4;
+            int end = line.find(")", start);
+            
+            if (end == string::npos || end - start > 8)
+            {
+                cerr << "Error: Closing parenthesis is too far from mul(" << endl;
+                index = start + 1; 
+                continue;
+            }
 
-        string numbers = line.substr(start, end - start);
-        size_t commaPos = numbers.find(",");
-        if (commaPos == string::npos) 
-        {
-            cerr << "Error: Missing comma in mul(" << numbers << ")" << endl;
-            index = end + 1; 
-            continue;
-        }
+            string numbers = line.substr(start, end - start);
+            size_t commaPos = numbers.find(",");
+            if (commaPos == string::npos) 
+            {
+                cerr << "Error: Missing comma in mul(" << numbers << ")" << endl;
+                index = end + 1; 
+                continue;
+            }
 
-        string firstNumStr = numbers.substr(0, commaPos);
-        string secondNumStr = numbers.substr(commaPos + 1);
+            string firstNumStr = numbers.substr(0, commaPos);
+            string secondNumStr = numbers.substr(commaPos + 1);
 
-        if (!isValidNumber(firstNumStr) || !isValidNumber(secondNumStr))
-        {
-            cerr << "Error: Invalid numbers in mul(" << numbers << ")" << endl;
+            if (!isValidNumber(firstNumStr) || !isValidNumber(secondNumStr))
+            {
+                cerr << "Error: Invalid numbers in mul(" << numbers << ")" << endl;
+                index = end + 1;
+                continue;
+            }
+
+            int firstNumber = stoi(firstNumStr);
+            int secondNumber = stoi(secondNumStr);
+
+            cout << "firstNumber: " << firstNumber << " secondNumber: " << secondNumber << endl;
+            cout << "product: " << firstNumber * secondNumber << endl;
+            sum += firstNumber * secondNumber;
+            cout << "sum: " << sum << endl;
+
             index = end + 1;
-            continue;
         }
 
-        int firstNumber = stoi(firstNumStr);
-        int secondNumber = stoi(secondNumStr);
 
-        cout << "firstNumber: " << firstNumber << " secondNumber: " << secondNumber << endl;
-        cout << "product: " << firstNumber * secondNumber << endl;
-        sum += firstNumber * secondNumber;
-        cout << "sum: " << sum << endl;
-
-        index = end + 1;
     }
+
 }
 
 int main()
