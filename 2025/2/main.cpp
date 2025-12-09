@@ -14,7 +14,7 @@ bool is_invalid(string id) {
         return first_half == second_half;
 }
 
-unsigned long long analyse_id_range(string id_range) {
+unsigned long long analyse_id_range(string id_range, unsigned long long &result) {
         // input ex: "385350926-385403705"
         unsigned long long id_1, id_2;
         char dash;
@@ -25,7 +25,8 @@ unsigned long long analyse_id_range(string id_range) {
         for (unsigned long long i = id_1; i <= id_2; i++)
         {
                 if(is_invalid(to_string(i))){
-                        return i;
+
+                        result += i;
                 }
         }
 
@@ -55,7 +56,7 @@ int main()
 
         for (auto &&id_range : id_ranges)
         {
-                result += analyse_id_range(id_range);
+                analyse_id_range(id_range, result);
         }
 
 
