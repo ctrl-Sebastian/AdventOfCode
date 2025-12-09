@@ -2,25 +2,31 @@
 using namespace std;
 
 bool is_invalid(string id) {
-        // TODO: check if ID is invalid
-        // build a sequence going char by char, if a char is different than the first char of the sequence, store that sequence, if the sequence is repeated another time and there are no char left in the string, the Id is invalid
-        return true;
+        // way of thinking: an id is invalid only if it has a sequence repeated twice
+        // for that to happen, the id must ve of even length, and a sequence repeated once, meaning, the same sequence two times.
+        // if the id has an odd length, it cannot be invalid
+        // if the id has an even length, it can be invalid if the first half is equal to the second half
+        if (id.length() % 2 != 0) {
+                return false;
+        }
+        string first_half = id.substr(0, id.length() / 2);
+        string second_half = id.substr(id.length() / 2);
+        return first_half == second_half;
 }
 
-long analyse_id_range(string id_range) {
+unsigned long long analyse_id_range(string id_range) {
         // input ex: "385350926-385403705"
-        long id_1, id_2;
+        unsigned long long id_1, id_2;
         char dash;
         stringstream ss(id_range);
 
         ss >> id_1 >> dash >> id_2;
 
-        for (long i = id_1; i < id_2; i++)
+        for (unsigned long long i = id_1; i <= id_2; i++)
         {
                 if(is_invalid(to_string(i))){
                         return i;
                 }
-                return 0;
         }
 
 
@@ -29,7 +35,7 @@ long analyse_id_range(string id_range) {
 
 int main()
 {
-        unsigned long result = 0;
+        unsigned long long result = 0;
 
         ifstream input_file;
         input_file.open("input.txt");
